@@ -1,4 +1,4 @@
-﻿from fastapi import APIRouter, HTTPException, status, Depends
+from fastapi import APIRouter, HTTPException, status, Depends
 from bson import ObjectId
 from datetime import datetime, timezone
 from typing import List, Optional
@@ -20,7 +20,7 @@ async def build_event_response(event_doc: dict, db) -> EventResponse:
     team_members = []
     if assigned_ids:
         obj_ids = [ObjectId(uid) for uid in assigned_ids if ObjectId.is_valid(uid)]
-        cursor = db.users.find({'_id': {'': obj_ids}})
+        cursor = db.users.find({'_id': {'$in': obj_ids}})
         async for tm in cursor:
             team_members.append(TeamMemberInfo(
                 id=str(tm['_id']),
@@ -136,7 +136,7 @@ async def update_event(
 
     result = await db.events.find_one_and_update(
         {'_id': ObjectId(event_id)},
-        {'': update_data},
+        {'$set': update_data},
         return_document=True
     )
     if not result:
@@ -156,7 +156,7 @@ async def assign_team_members(
     db = get_database()
     result = await db.events.find_one_and_update(
         {'_id': ObjectId(event_id)},
-        {'': {'assigned_team_ids': assign_in.team_member_ids}},
+        {'$set': {'assigned_team_ids': assign_in.team_member_ids}},
         return_document=True
     )
     if not result:

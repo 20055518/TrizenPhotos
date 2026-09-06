@@ -1,4 +1,4 @@
-﻿import os
+import os
 import io
 import uuid
 from pathlib import Path
@@ -44,7 +44,7 @@ def seed_database():
     db = client[settings.DATABASE_NAME]
 
     # Clean existing seed records
-    db.users.delete_many({'email': {'': ['admin@trizen.com', 'photographer@trizen.com']}})
+    db.users.delete_many({'email': {'$in': ['admin@trizen.com', 'photographer@trizen.com']}})
     
     # 1. Create Demo Users
     admin_id = db.users.insert_one({

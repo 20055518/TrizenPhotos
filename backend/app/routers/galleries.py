@@ -1,4 +1,4 @@
-﻿from fastapi import APIRouter, HTTPException, status, Depends, Query, Response
+from fastapi import APIRouter, HTTPException, status, Depends, Query, Response
 from fastapi.responses import StreamingResponse
 from bson import ObjectId
 from datetime import datetime, timezone
@@ -53,7 +53,7 @@ async def publish_gallery(
         else:
             slug = generate_random_slug(6)
 
-    collision = await db.galleries.find_one({'slug': slug, 'event_id': {'': event_id}})
+    collision = await db.galleries.find_one({'slug': slug, 'event_id': {'$ne': event_id}})
     if collision:
         slug = f'{slug}-{generate_random_slug(3)}'
 
@@ -63,7 +63,7 @@ async def publish_gallery(
     gallery_doc = await db.galleries.find_one_and_update(
         {'event_id': event_id},
         {
-            '': {
+            '$set': {
                 'event_id': event_id,
                 'slug': slug,
                 'pin_hash': hashed_pin,

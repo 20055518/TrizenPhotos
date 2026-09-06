@@ -1,4 +1,4 @@
-﻿from fastapi import APIRouter, HTTPException, status, Depends, UploadFile, File, Form, Query
+from fastapi import APIRouter, HTTPException, status, Depends, UploadFile, File, Form, Query
 from fastapi.responses import FileResponse
 from bson import ObjectId
 from datetime import datetime, timezone
@@ -138,8 +138,8 @@ async def update_photo_selection(
         raise HTTPException(status_code=400, detail='No valid photo IDs provided.')
 
     result = await db.photos.update_many(
-        {'_id': {'': obj_ids}},
-        {'': {'is_selected_for_gallery': update_in.is_selected}}
+        {'_id': {'$in': obj_ids}},
+        {'$set': {'is_selected_for_gallery': update_in.is_selected}}
     )
     return {
         'modified_count': result.modified_count,
