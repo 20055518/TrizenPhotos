@@ -132,7 +132,7 @@ export const TeamDashboard: React.FC = () => {
                     onClick={() => setSelectedEvent(e)}
                     className={`min-w-[200px] lg:min-w-0 w-full text-left p-3 sm:p-4 rounded-xl sm:rounded-2xl border transition-all cursor-pointer flex items-center justify-between flex-shrink-0 ${
                       isSelected
-                        ? 'bg-indigo-600/10 border-indigo-500 text-white shadow-md shadow-indigo-600/10'
+                        ? 'bg-amber-500/10 border-amber-500 text-white shadow-md shadow-amber-500/10'
                         : 'bg-slate-900/60 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-white'
                     }`}
                   >
@@ -143,7 +143,7 @@ export const TeamDashboard: React.FC = () => {
                         <span className="truncate">{e.date || 'TBD'}</span>
                       </div>
                     </div>
-                    <ChevronRight className={`w-4 h-4 flex-shrink-0 ${isSelected ? 'text-indigo-400' : 'text-slate-600'}`} />
+                    <ChevronRight className={`w-4 h-4 flex-shrink-0 ${isSelected ? 'text-amber-400' : 'text-slate-600'}`} />
                   </button>
                 );
               })}
@@ -165,7 +165,7 @@ export const TeamDashboard: React.FC = () => {
                     </div>
 
                     <div className="text-xs font-medium text-slate-300 bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-700/80 w-fit">
-                      My Uploads: <strong className="text-indigo-400">{photos.length}</strong> photos
+                      My Uploads: <strong className="text-amber-400">{photos.length}</strong> photos
                     </div>
                   </div>
 
@@ -177,7 +177,7 @@ export const TeamDashboard: React.FC = () => {
                       handleFiles(e.dataTransfer.files);
                     }}
                     onClick={() => fileInputRef.current?.click()}
-                    className="mt-4 sm:mt-6 border-2 border-dashed border-slate-700 hover:border-indigo-500 bg-slate-950/40 hover:bg-slate-950/70 rounded-xl sm:rounded-2xl p-6 sm:p-8 text-center cursor-pointer transition-all group"
+                    className="mt-4 sm:mt-6 border-2 border-dashed border-slate-700 hover:border-amber-500 bg-slate-950/40 hover:bg-slate-950/70 rounded-xl sm:rounded-2xl p-6 sm:p-8 text-center cursor-pointer transition-all group"
                   >
                     <input
                       type="file"
@@ -187,7 +187,7 @@ export const TeamDashboard: React.FC = () => {
                       accept="image/*"
                       className="hidden"
                     />
-                    <UploadCloud className="w-8 h-8 sm:w-10 sm:h-10 text-indigo-400 group-hover:scale-110 transition-transform mx-auto mb-2 sm:mb-3" />
+                    <UploadCloud className="w-8 h-8 sm:w-10 sm:h-10 text-amber-400 group-hover:scale-110 transition-transform mx-auto mb-2 sm:mb-3" />
                     <h4 className="text-xs sm:text-sm font-semibold text-white">
                       {isUploading ? `Uploading photographs (${uploadProgress}%)...` : 'Tap or drag photos here to upload'}
                     </h4>
@@ -198,7 +198,7 @@ export const TeamDashboard: React.FC = () => {
                     {isUploading && (
                       <div className="w-full max-w-xs mx-auto mt-3 sm:mt-4 bg-slate-800 rounded-full h-2 overflow-hidden">
                         <div
-                          className="bg-indigo-600 h-full transition-all duration-200"
+                          className="bg-gradient-to-r from-amber-600 to-amber-400 h-full transition-all duration-200"
                           style={{ width: `${uploadProgress}%` }}
                         />
                       </div>

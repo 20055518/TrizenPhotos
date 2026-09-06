@@ -31,15 +31,15 @@ export const Register: React.FC = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center p-4">
+    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center p-4 animate-page-enter">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-tr from-indigo-600 to-violet-500 shadow-xl shadow-indigo-500/25 mb-4">
-            <Camera className="w-7 h-7 text-white" />
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-600 via-amber-500 to-yellow-400 shadow-xl shadow-amber-500/25 mb-4 animate-float animate-pulse-glow">
+            <Camera className="w-7 h-7 text-slate-950 font-bold" />
           </div>
           <h1 className="text-2xl font-bold tracking-tight text-white">Create your account</h1>
           <p className="text-sm text-slate-400 mt-1">
-            Join your photography team on TrizenPhotos
+            Join your photography team on <span className="animate-gradient-text font-semibold">TrizenPhotos</span>
           </p>
         </div>
 
@@ -124,7 +124,7 @@ export const Register: React.FC = () => {
                   onClick={() => setRole('TEAM_MEMBER')}
                   className={`p-3 rounded-xl border text-left flex items-center space-x-2.5 cursor-pointer transition-all ${
                     role === 'TEAM_MEMBER'
-                      ? 'bg-indigo-500/10 border-indigo-500/50 text-indigo-400'
+                      ? 'bg-amber-500/10 border-amber-500/50 text-amber-300'
                       : 'bg-slate-800/50 border-slate-700/80 text-slate-400 hover:border-slate-600'
                   }`}
                 >
@@ -137,16 +137,16 @@ export const Register: React.FC = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full mt-3 py-3 px-4 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white font-semibold rounded-xl text-sm transition-all shadow-lg shadow-indigo-600/30 flex items-center justify-center space-x-2 cursor-pointer"
+              className="btn-press w-full mt-3 py-3 px-4 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-yellow-500 disabled:opacity-50 text-slate-950 font-bold rounded-xl text-sm transition-all shadow-lg shadow-amber-600/30 flex items-center justify-center space-x-2 cursor-pointer"
             >
-              <UserPlus className="w-4 h-4" />
+              <UserPlus className="w-4 h-4 text-slate-950 font-bold" />
               <span>{isLoading ? 'Creating Account...' : 'Register'}</span>
             </button>
           </form>
 
           <div className="mt-6 text-center text-xs text-slate-400">
             Already have an account?{' '}
-            <Link to="/login" className="text-indigo-400 hover:text-indigo-300 font-semibold">
+            <Link to="/login" className="text-amber-400 hover:text-amber-300 font-semibold">
               Sign in
             </Link>
           </div>

@@ -1,9 +1,112 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
+
+:root {
+  --color-bg-primary: #0a0a0c;
+  --color-bg-surface: #131318;
+  --color-bg-elevated: #1c1c24;
+  --color-border: #2c2a26;
+  --color-text-primary: #f5f3ef;
+  --color-text-secondary: #a8a29e;
+  --color-accent: #d97706;
+  --color-accent-light: #fbbf24;
+  --color-gold-glow: rgba(217, 119, 6, 0.2);
+}
+
+html.theme-light {
+  --color-bg-primary: #fdfbf7;
+  --color-bg-surface: #ffffff;
+  --color-bg-elevated: #f4f0e6;
+  --color-border: #e7e0cf;
+  --color-text-primary: #1c1917;
+  --color-text-secondary: #78716c;
+  --color-accent: #b45309;
+  --color-accent-light: #d97706;
+  --color-gold-glow: rgba(180, 83, 9, 0.15);
+}
 
 @layer base {
   body {
-    @apply bg-slate-950 text-slate-100 min-h-screen antialiased selection:bg-indigo-500 selection:text-white font-sans;
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    @apply min-h-screen antialiased font-sans transition-colors duration-300;
+    selection-background-color: #d97706;
+    selection-color: #ffffff;
   }
+}
+
+/* Light mode overrides for standard dark slate elements */
+html.theme-light .bg-slate-950 {
+  background-color: #fcf9f2 !important;
+  color: #1c1917 !important;
+}
+html.theme-light .bg-slate-900 {
+  background-color: #ffffff !important;
+  border-color: #e6dfcf !important;
+  color: #1c1917 !important;
+}
+html.theme-light .bg-slate-900\/70,
+html.theme-light .bg-slate-900\/80,
+html.theme-light .bg-slate-900\/90 {
+  background-color: rgba(255, 255, 255, 0.92) !important;
+  border-color: #e6dfcf !important;
+  color: #1c1917 !important;
+}
+html.theme-light .bg-slate-800,
+html.theme-light .bg-slate-800\/40,
+html.theme-light .bg-slate-800\/50,
+html.theme-light .bg-slate-800\/60,
+html.theme-light .bg-slate-800\/80 {
+  background-color: #f5f0e3 !important;
+  border-color: #e2dac7 !important;
+  color: #292524 !important;
+}
+html.theme-light .border-slate-800,
+html.theme-light .border-slate-800\/80,
+html.theme-light .border-slate-800\/90,
+html.theme-light .border-slate-700,
+html.theme-light .border-slate-700\/60,
+html.theme-light .border-slate-700\/80 {
+  border-color: #e4ddcd !important;
+}
+html.theme-light .text-white {
+  color: #1c1917 !important;
+}
+html.theme-light .text-slate-100,
+html.theme-light .text-slate-200,
+html.theme-light .text-slate-300 {
+  color: #292524 !important;
+}
+html.theme-light .text-slate-400,
+html.theme-light .text-slate-500 {
+  color: #78716c !important;
+}
+html.theme-light .hover\:bg-slate-800:hover,
+html.theme-light .hover\:bg-slate-700:hover {
+  background-color: #ede5d5 !important;
+}
+html.theme-light .hover\:border-slate-700:hover,
+html.theme-light .hover\:border-slate-600:hover {
+  border-color: #d6cbaf !important;
+}
+html.theme-light input,
+html.theme-light textarea,
+html.theme-light select {
+  background-color: #faf7ef !important;
+  color: #1c1917 !important;
+  border-color: #ded5c2 !important;
+}
+html.theme-light .bg-slate-950\/80 {
+  background-color: #f7f3e8 !important;
+  color: #1c1917 !important;
+}
+html.theme-light ::-webkit-scrollbar-track {
+  background: #f4eee1;
+}
+html.theme-light ::-webkit-scrollbar-thumb {
+  background: #d4c8b0;
+}
+html.theme-light ::-webkit-scrollbar-thumb:hover {
+  background: #bfae91;
 }
 
 /* Custom scrollbar */
@@ -21,3 +124,141 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #475569;
 }
+
+/* ─── Custom Animations ─────────────────────────────────────── */
+
+/* Shimmer skeleton loading */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    #1c1917 25%,
+    #292524 50%,
+    #1c1917 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+}
+html.theme-light .animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    #eee7d5 25%,
+    #fbf9f2 50%,
+    #eee7d5 75%
+  );
+  background-size: 200% 100%;
+}
+
+/* Stagger fade-up entrance for grid cards */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1); }
+}
+.animate-fade-up {
+  animation: fade-up 0.45s ease both;
+}
+.stagger-1  { animation-delay: 0.05s; }
+.stagger-2  { animation-delay: 0.10s; }
+.stagger-3  { animation-delay: 0.15s; }
+.stagger-4  { animation-delay: 0.20s; }
+.stagger-5  { animation-delay: 0.25s; }
+.stagger-6  { animation-delay: 0.30s; }
+.stagger-7  { animation-delay: 0.35s; }
+.stagger-8  { animation-delay: 0.40s; }
+.stagger-9  { animation-delay: 0.45s; }
+.stagger-10 { animation-delay: 0.50s; }
+
+/* Photo tile pop-in */
+@keyframes photo-pop {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.animate-photo-pop {
+  animation: photo-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* PIN box shake on wrong code */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  15%       { transform: translateX(-8px); }
+  30%       { transform: translateX(8px); }
+  45%       { transform: translateX(-6px); }
+  60%       { transform: translateX(6px); }
+  75%       { transform: translateX(-3px); }
+  90%       { transform: translateX(3px); }
+}
+.animate-shake {
+  animation: shake 0.5s ease both;
+}
+
+/* Floating logo / icon */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-6px); }
+}
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Subtle glow pulse on luxury hero elements */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(217, 119, 6, 0); }
+  50%       { box-shadow: 0 0 22px 6px rgba(217, 119, 6, 0.3); }
+}
+.animate-pulse-glow {
+  animation: pulse-glow 2.5s ease-in-out infinite;
+}
+
+/* Slide-down from navbar (mobile menu) */
+@keyframes slide-down {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-slide-down {
+  animation: slide-down 0.2s ease both;
+}
+
+/* Lightbox image cross-fade */
+@keyframes img-fade {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.animate-img-fade {
+  animation: img-fade 0.25s ease both;
+}
+
+/* Page enter */
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-page-enter {
+  animation: page-enter 0.4s ease both;
+}
+
+/* Animated luxury gold & champagne gradient text */
+@keyframes gradient-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-gradient-text {
+  background: linear-gradient(90deg, #f59e0b, #fbbf24, #d97706, #fde68a, #f59e0b);
+  background-size: 300% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 5s linear infinite;
+}
+
+/* Button press micro-interaction */
+.btn-press {
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+.btn-press:active {
+  transform: scale(0.96);
+}
+

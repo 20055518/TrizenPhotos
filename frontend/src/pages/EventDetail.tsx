@@ -263,7 +263,7 @@ export const EventDetail: React.FC = () => {
                 <div className="text-[10px] sm:text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
                   Selected
                 </div>
-                <div className="text-xl sm:text-2xl font-black text-emerald-400 mt-0.5">
+                <div className="text-xl sm:text-2xl font-black text-amber-400 mt-0.5">
                   {event.selected_photos}
                 </div>
               </div>
@@ -275,9 +275,9 @@ export const EventDetail: React.FC = () => {
                   setPublishSuccess(false);
                   setIsPublishModalOpen(true);
                 }}
-                className="w-full sm:w-auto px-4 sm:px-5 py-2.5 sm:py-3 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-semibold text-xs rounded-xl shadow-lg shadow-indigo-600/30 transition-all flex items-center justify-center space-x-2 cursor-pointer"
+                className="btn-press w-full sm:w-auto px-4 sm:px-5 py-2.5 sm:py-3 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-yellow-500 text-slate-950 font-bold text-xs rounded-xl shadow-lg shadow-amber-600/30 transition-all flex items-center justify-center space-x-2 cursor-pointer"
               >
-                <Globe className="w-4 h-4" />
+                <Globe className="w-4 h-4 text-slate-950 font-bold" />
                 <span>{event.gallery?.is_published ? 'Configure Gallery & PIN' : 'Publish Gallery'}</span>
               </button>
             </div>
@@ -286,15 +286,15 @@ export const EventDetail: React.FC = () => {
 
         {/* Published Gallery Shortcut Bar */}
         {event.gallery?.is_published && (
-          <div className="mt-5 sm:mt-6 pt-4 sm:pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 bg-indigo-950/20 -mx-4 -mb-4 sm:-mx-8 sm:-mb-8 p-4 sm:p-6 rounded-b-2xl sm:rounded-b-3xl border-b border-indigo-500/20">
+          <div className="mt-5 sm:mt-6 pt-4 sm:pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 bg-amber-950/20 -mx-4 -mb-4 sm:-mx-8 sm:-mb-8 p-4 sm:p-6 rounded-b-2xl sm:rounded-b-3xl border-b border-amber-500/20">
             <div className="flex items-center space-x-2.5">
-              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-indigo-500/10 border border-indigo-500/30 flex items-center justify-center text-indigo-400 flex-shrink-0">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 flex-shrink-0">
                 <Lock className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </div>
               <div>
                 <div className="text-xs font-semibold text-white">Client Gallery Active</div>
                 <div className="text-[11px] text-slate-400 font-mono">
-                  Slug: <span className="text-indigo-300 font-bold">{event.gallery.slug}</span>
+                  Slug: <span className="text-amber-300 font-bold">{event.gallery.slug}</span>
                 </div>
               </div>
             </div>
@@ -329,7 +329,7 @@ export const EventDetail: React.FC = () => {
             onClick={() => setFilterMode('ALL')}
             className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer flex-shrink-0 ${
               filterMode === 'ALL'
-                ? 'bg-indigo-600 text-white'
+                ? 'bg-amber-500 text-slate-950 font-bold'
                 : 'bg-slate-800 text-slate-400 hover:text-white'
             }`}
           >
@@ -339,7 +339,7 @@ export const EventDetail: React.FC = () => {
             onClick={() => setFilterMode('SELECTED')}
             className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer flex-shrink-0 ${
               filterMode === 'SELECTED'
-                ? 'bg-emerald-600 text-white'
+                ? 'bg-amber-600 text-white font-bold'
                 : 'bg-slate-800 text-slate-400 hover:text-white'
             }`}
           >
@@ -382,9 +382,9 @@ export const EventDetail: React.FC = () => {
           <button
             onClick={() => fileInputRef.current?.click()}
             disabled={isUploading}
-            className="w-full sm:w-auto px-3.5 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-lg flex items-center justify-center space-x-1.5 shadow transition-all cursor-pointer"
+            className="btn-press w-full sm:w-auto px-3.5 py-1.5 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-yellow-500 text-slate-950 text-xs font-bold rounded-lg flex items-center justify-center space-x-1.5 shadow-lg shadow-amber-600/20 transition-all cursor-pointer"
           >
-            <Upload className="w-3.5 h-3.5" />
+            <Upload className="w-3.5 h-3.5 text-slate-950 font-bold" />
             <span>{isUploading ? `Uploading (${uploadProgress}%)` : 'Upload Photos'}</span>
           </button>
         </div>
@@ -410,7 +410,7 @@ export const EventDetail: React.FC = () => {
                 key={photo.id}
                 className={`group relative rounded-xl sm:rounded-2xl overflow-hidden border transition-all duration-200 bg-slate-900 ${
                   isSelected
-                    ? 'border-emerald-500 shadow-md sm:shadow-lg shadow-emerald-500/10 ring-2 ring-emerald-500/30'
+                    ? 'border-amber-500 shadow-md sm:shadow-lg shadow-amber-500/15 ring-2 ring-amber-500/40'
                     : 'border-slate-800 hover:border-slate-700'
                 }`}
               >
@@ -433,7 +433,7 @@ export const EventDetail: React.FC = () => {
                   onClick={() => handleToggleSelection(photo)}
                   className={`absolute top-2 left-2 p-1.5 rounded-lg border transition-all cursor-pointer shadow-md ${
                     isSelected
-                      ? 'bg-emerald-500 border-emerald-400 text-white'
+                      ? 'bg-amber-500 border-amber-400 text-slate-950 font-bold'
                       : 'bg-black/60 border-white/20 text-white/50 hover:text-white'
                   }`}
                   title={isSelected ? 'Remove from Gallery' : 'Select for Gallery'}
@@ -592,7 +592,7 @@ export const EventDetail: React.FC = () => {
                       value={slug}
                       onChange={(e) => setSlug(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ''))}
                       placeholder="abc123"
-                      className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-r-xl text-sm font-mono text-white focus:outline-none focus:border-indigo-500"
+                      className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-r-xl text-sm font-mono text-white focus:outline-none focus:border-amber-500"
                     />
                   </div>
                 </div>
@@ -608,7 +608,7 @@ export const EventDetail: React.FC = () => {
                   <button
                     type="submit"
                     disabled={isPublishing || event.selected_photos === 0}
-                    className="px-4 sm:px-5 py-2 sm:py-2.5 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white text-xs font-semibold rounded-xl shadow transition-colors cursor-pointer"
+                    className="btn-press px-4 sm:px-5 py-2 sm:py-2.5 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-yellow-500 disabled:opacity-50 text-slate-950 text-xs font-bold rounded-xl shadow-lg shadow-amber-600/30 transition-colors cursor-pointer"
                   >
                     {isPublishing ? 'Publishing...' : 'Save & Publish'}
                   </button>

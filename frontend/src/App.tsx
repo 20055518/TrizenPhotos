@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { Navbar } from './components/Navbar';
 import { ProtectedRoute } from './components/ProtectedRoute';
 
@@ -21,11 +22,12 @@ const RoleBasedHome: React.FC = () => {
 
 export const App: React.FC = () => {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
-          <Navbar />
-          <div className="flex-1">
+    <ThemeProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans transition-colors duration-300">
+            <Navbar />
+            <div className="flex-1">
             <Routes>
               {/* Public customer gallery link (No auth needed) */}
               <Route path="/gallery/:slug" element={<CustomerGallery />} />
@@ -61,7 +63,7 @@ export const App: React.FC = () => {
         </div>
       </BrowserRouter>
     </AuthProvider>
+  </ThemeProvider>
   );
 };
-
 export default App;

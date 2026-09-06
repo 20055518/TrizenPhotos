@@ -3,17 +3,20 @@ import { useParams } from 'react-router-dom';
 import { galleriesApi } from '../api/client';
 import { PublicGalleryInfo, GalleryAccessData } from '../types';
 import { Lightbox } from '../components/Lightbox';
+import { useTheme } from '../context/ThemeContext';
 import { 
   Lock, KeyRound, Download, Calendar, MapPin, Eye, 
-  AlertCircle, Camera, Sparkles 
+  AlertCircle, Camera, Sparkles, Sun, Moon 
 } from 'lucide-react';
 
 export const CustomerGallery: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
+  const { mode, toggleTheme } = useTheme();
   const [galleryInfo, setGalleryInfo] = useState<PublicGalleryInfo | null>(null);
   const [accessData, setAccessData] = useState<GalleryAccessData | null>(null);
   const [pin, setPin] = useState('');
   const [error, setError] = useState('');
+  const [pinShake, setPinShake] = useState(false);
   const [isVerifying, setIsVerifying] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
@@ -58,6 +61,8 @@ export const CustomerGallery: React.FC = () => {
       sessionStorage.setItem(`gallery_data_${slug}`, JSON.stringify(data));
     } catch (err: any) {
       setError(err.response?.data?.detail || 'Incorrect PIN. Please try again.');
+      setPinShake(true);
+      setTimeout(() => setPinShake(false), 600);
     } finally {
       setIsVerifying(false);
     }
@@ -91,9 +96,27 @@ export const CustomerGallery: React.FC = () => {
   if (!accessData) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 flex flex-col justify-between py-8 sm:py-12 px-4 select-none">
-        <div className="max-w-md w-full mx-auto my-auto">
+        {/* Top bar with theme toggle */}
+        <div className="flex justify-end max-w-md w-full mx-auto">
+          <button
+            onClick={toggleTheme}
+            title={`Switch to ${mode === 'dark' ? 'Light' : 'Dark'} mood`}
+            className="p-2 rounded-xl text-amber-400 hover:bg-amber-500/10 border border-amber-500/20 hover:border-amber-500/40 transition-all cursor-pointer flex items-center gap-1.5"
+          >
+            {mode === 'dark' ? (
+              <Sun className="w-4 h-4 text-amber-400 animate-pulse" />
+            ) : (
+              <Moon className="w-4 h-4 text-amber-500" />
+            )}
+            <span className="text-[11px] font-semibold tracking-wider uppercase">
+              {mode === 'dark' ? 'Light' : 'Dark'}
+            </span>
+          </button>
+        </div>
+
+        <div className="max-w-md w-full mx-auto my-auto animate-page-enter">
           <div className="text-center mb-6 sm:mb-8">
-            <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-2xl sm:rounded-3xl bg-gradient-to-tr from-amber-500 to-rose-500 p-0.5 shadow-2xl shadow-amber-500/20 mb-3 sm:mb-4">
+            <div className="inline-flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-2xl sm:rounded-3xl bg-gradient-to-tr from-amber-600 via-amber-500 to-yellow-400 p-0.5 shadow-2xl shadow-amber-500/25 mb-3 sm:mb-4 animate-float animate-pulse-glow">
               <div className="w-full h-full bg-slate-950 rounded-[20px] sm:rounded-[22px] flex items-center justify-center">
                 <KeyRound className="w-6 h-6 sm:w-7 sm:h-7 text-amber-400" />
               </div>
@@ -116,7 +139,7 @@ export const CustomerGallery: React.FC = () => {
                 )}
                 {galleryInfo.event_location && (
                   <span className="flex items-center gap-1">
-                    <MapPin className="w-3.5 h-3.5 text-rose-400" />
+                    <MapPin className="w-3.5 h-3.5 text-amber-400" />
                     {galleryInfo.event_location}
                   </span>
                 )}
@@ -124,9 +147,9 @@ export const CustomerGallery: React.FC = () => {
             )}
           </div>
 
-          <div className="bg-slate-900/90 border border-slate-800 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-2xl backdrop-blur-xl">
+          <div className={`bg-slate-900/90 border border-slate-800 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-2xl backdrop-blur-xl ${pinShake ? 'animate-shake border-rose-500/40' : ''}`}>
             {error && (
-              <div className="mb-4 sm:mb-5 p-3 bg-rose-500/10 border border-rose-500/20 rounded-xl flex items-start space-x-2 text-rose-300 text-xs">
+              <div className="mb-4 sm:mb-5 p-3 bg-rose-500/10 border border-rose-500/20 rounded-xl flex items-start space-x-2 text-rose-300 text-xs animate-fade-up">
                 <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5" />
                 <span>{error}</span>
               </div>
@@ -159,9 +182,9 @@ export const CustomerGallery: React.FC = () => {
               <button
                 type="submit"
                 disabled={isVerifying || pin.length < 4}
-                className="w-full py-3 px-4 bg-gradient-to-r from-amber-500 to-rose-500 hover:from-amber-400 hover:to-rose-400 disabled:opacity-40 text-white font-bold rounded-xl sm:rounded-2xl text-sm transition-all shadow-lg shadow-amber-500/20 flex items-center justify-center space-x-2 cursor-pointer"
+                className="btn-press w-full py-3 px-4 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-yellow-500 disabled:opacity-40 text-slate-950 font-bold rounded-xl sm:rounded-2xl text-sm transition-all shadow-lg shadow-amber-500/25 flex items-center justify-center space-x-2 cursor-pointer"
               >
-                <Lock className="w-4 h-4" />
+                <Lock className="w-4 h-4 text-slate-950 font-bold" />
                 <span>{isVerifying ? 'Verifying PIN...' : 'Unlock Gallery'}</span>
               </button>
             </form>
@@ -217,12 +240,28 @@ export const CustomerGallery: React.FC = () => {
           </div>
 
           <div className="flex items-center space-x-2 sm:space-x-3 w-full sm:w-auto">
+            {/* Theme Toggle Button */}
+            <button
+              onClick={toggleTheme}
+              title={`Switch to ${mode === 'dark' ? 'Light' : 'Dark'} mood`}
+              className="p-2 rounded-xl text-amber-400 hover:bg-amber-500/10 border border-amber-500/20 hover:border-amber-500/40 transition-all cursor-pointer flex items-center gap-1.5"
+            >
+              {mode === 'dark' ? (
+                <Sun className="w-4 h-4 text-amber-400 animate-pulse" />
+              ) : (
+                <Moon className="w-4 h-4 text-amber-500" />
+              )}
+              <span className="text-[11px] font-semibold tracking-wider uppercase hidden sm:inline">
+                {mode === 'dark' ? 'Light' : 'Dark'}
+              </span>
+            </button>
+
             <button
               onClick={handleDownloadAll}
               disabled={isDownloadingZip || photos.length === 0}
-              className="w-full sm:w-auto justify-center inline-flex items-center space-x-2 px-4 py-2 sm:py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 disabled:opacity-50 text-white text-xs font-bold rounded-xl shadow-lg shadow-indigo-600/30 transition-all cursor-pointer"
+              className="btn-press w-full sm:w-auto justify-center inline-flex items-center space-x-2 px-4 py-2 sm:py-2.5 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-yellow-500 disabled:opacity-50 text-slate-950 text-xs font-bold rounded-xl shadow-lg shadow-amber-600/30 transition-all cursor-pointer"
             >
-              <Download className="w-4 h-4" />
+              <Download className="w-4 h-4 text-slate-950 font-bold" />
               <span>{isDownloadingZip ? 'Preparing Zip...' : 'Download All (.ZIP)'}</span>
             </button>
           </div>
@@ -239,29 +278,32 @@ export const CustomerGallery: React.FC = () => {
           </div>
         ) : (
           <div className="columns-1 xs:columns-2 sm:columns-2 md:columns-3 lg:columns-4 gap-3 sm:gap-4 space-y-3 sm:space-y-4">
-            {photos.map((photo, index) => (
-              <div
-                key={photo.id}
-                onClick={() => setLightboxIndex(index)}
-                className="break-inside-avoid group relative rounded-xl sm:rounded-2xl overflow-hidden bg-slate-900 border border-slate-800/80 hover:border-slate-700 cursor-pointer shadow-md hover:shadow-xl transition-all duration-300"
-              >
-                <img
-                  src={photo.thumbnail_url || photo.url}
-                  alt={photo.original_name}
-                  className="w-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  loading="lazy"
-                />
+            {photos.map((photo, index) => {
+              const staggerClass = `stagger-${Math.min((index % 10) + 1, 10)}`;
+              return (
+                <div
+                  key={photo.id}
+                  onClick={() => setLightboxIndex(index)}
+                  className={`animate-photo-pop ${staggerClass} break-inside-avoid group relative rounded-xl sm:rounded-2xl overflow-hidden bg-slate-900 border border-slate-800/80 hover:border-indigo-500/40 cursor-pointer shadow-md hover:shadow-2xl hover:shadow-indigo-900/30 hover:-translate-y-0.5 transition-all duration-300`}
+                >
+                  <img
+                    src={photo.thumbnail_url || photo.url}
+                    alt={photo.original_name}
+                    className="w-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    loading="lazy"
+                  />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col justify-end p-2.5 sm:p-3">
-                  <div className="flex items-center justify-between text-white text-xs">
-                    <span className="truncate font-medium text-[11px] sm:text-xs mr-2">{photo.original_name}</span>
-                    <span className="p-1 sm:p-1.5 bg-white/20 rounded-lg backdrop-blur-sm flex-shrink-0">
-                      <Eye className="w-3.5 h-3.5" />
-                    </span>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col justify-end p-2.5 sm:p-3">
+                    <div className="flex items-center justify-between text-white text-xs">
+                      <span className="truncate font-medium text-[11px] sm:text-xs mr-2">{photo.original_name}</span>
+                      <span className="p-1 sm:p-1.5 bg-white/20 rounded-lg backdrop-blur-sm flex-shrink-0">
+                        <Eye className="w-3.5 h-3.5" />
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </main>

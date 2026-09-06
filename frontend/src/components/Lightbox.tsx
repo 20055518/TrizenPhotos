@@ -63,9 +63,9 @@ export const Lightbox: React.FC<LightboxProps> = ({
         <div className="flex items-center space-x-2 flex-shrink-0">
           <button
             onClick={handleDownload}
-            className="flex items-center space-x-1 sm:space-x-1.5 px-2.5 sm:px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold transition-colors shadow-lg shadow-indigo-600/30 cursor-pointer"
+            className="btn-press flex items-center space-x-1 sm:space-x-1.5 px-2.5 sm:px-3 py-1.5 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-yellow-500 text-slate-950 font-bold rounded-lg text-xs transition-colors shadow-lg shadow-amber-600/30 cursor-pointer"
           >
-            <Download className="w-3.5 h-3.5" />
+            <Download className="w-3.5 h-3.5 text-slate-950 font-bold" />
             <span className="hidden xs:inline sm:inline">Download</span>
           </button>
           <button
@@ -90,9 +90,10 @@ export const Lightbox: React.FC<LightboxProps> = ({
         )}
 
         <img
+          key={photo.id}
           src={photo.url}
           alt={photo.original_name}
-          className="max-h-[70vh] sm:max-h-[80vh] max-w-[95vw] sm:max-w-[90vw] object-contain rounded-lg shadow-2xl transition-all"
+          className="max-h-[70vh] sm:max-h-[80vh] max-w-[95vw] sm:max-w-[90vw] object-contain rounded-lg shadow-2xl animate-img-fade"
         />
 
         {currentIndex < photos.length - 1 && (
@@ -110,7 +111,7 @@ export const Lightbox: React.FC<LightboxProps> = ({
       <div className="min-h-12 py-2 px-3 sm:px-6 border-t border-white/10 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[11px] sm:text-xs text-white/60">
         {photo.uploaded_by_name && (
           <div className="flex items-center space-x-1">
-            <User className="w-3.5 h-3.5 text-indigo-400" />
+            <User className="w-3.5 h-3.5 text-amber-400" />
             <span>By: <strong className="text-white">{photo.uploaded_by_name}</strong></span>
           </div>
         )}

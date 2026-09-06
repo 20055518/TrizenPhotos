@@ -82,13 +82,13 @@ export const AdminDashboard: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 animate-page-enter">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 pb-5 sm:pb-6 border-b border-slate-800">
         <div>
           <h1 className="text-xl sm:text-3xl font-bold tracking-tight text-white flex items-center gap-2">
-            <span>Photography Events</span>
-            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+            <span className="animate-gradient-text">Photography Events</span>
+            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">
               {events.length}
             </span>
           </h1>
@@ -99,18 +99,37 @@ export const AdminDashboard: React.FC = () => {
 
         <button
           onClick={() => setIsModalOpen(true)}
-          className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-4 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs sm:text-sm font-semibold rounded-xl shadow-lg shadow-indigo-600/30 transition-all hover:scale-[1.02] cursor-pointer"
+          className="btn-press w-full sm:w-auto inline-flex items-center justify-center space-x-2 px-4 py-2.5 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-600 hover:from-amber-500 hover:to-amber-500 text-slate-950 text-xs sm:text-sm font-bold rounded-xl shadow-lg shadow-amber-600/30 transition-all hover:scale-[1.02] cursor-pointer"
         >
-          <Plus className="w-4 h-4" />
+          <Plus className="w-4 h-4 text-slate-950 font-bold" />
           <span>Create New Event</span>
         </button>
       </div>
 
       {/* Events Grid */}
       {isLoading ? (
-        <div className="py-20 text-center text-slate-400">
-          <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-3" />
-          <p className="text-sm">Loading events...</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 mt-6 sm:mt-8">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="bg-slate-900/70 border border-slate-800/90 rounded-2xl overflow-hidden shadow-lg">
+              <div className="p-4 sm:p-6 space-y-3">
+                <div className="flex justify-between">
+                  <div className="h-4 w-24 rounded-lg animate-shimmer" />
+                  <div className="h-4 w-16 rounded-full animate-shimmer" />
+                </div>
+                <div className="h-6 w-3/4 rounded-lg animate-shimmer" />
+                <div className="h-4 w-1/2 rounded-lg animate-shimmer" />
+                <div className="h-4 w-full rounded-lg animate-shimmer" />
+                <div className="grid grid-cols-2 gap-2 mt-2">
+                  <div className="h-14 rounded-xl animate-shimmer" />
+                  <div className="h-14 rounded-xl animate-shimmer" />
+                </div>
+              </div>
+              <div className="p-3 sm:p-4 bg-slate-900 border-t border-slate-800 flex justify-between">
+                <div className="h-8 w-28 rounded-lg animate-shimmer" />
+                <div className="h-8 w-8 rounded-lg animate-shimmer" />
+              </div>
+            </div>
+          ))}
         </div>
       ) : events.length === 0 ? (
         <div className="py-16 text-center border border-dashed border-slate-800 rounded-2xl my-6 p-6 sm:p-8 bg-slate-900/30">
@@ -128,12 +147,13 @@ export const AdminDashboard: React.FC = () => {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 mt-6 sm:mt-8">
-          {events.map((event) => {
+          {events.map((event, idx) => {
             const isPublished = event.gallery?.is_published;
+            const staggerClass = `stagger-${Math.min(idx + 1, 10)}`;
             return (
               <div
                 key={event.id}
-                className="bg-slate-900/70 border border-slate-800/90 rounded-2xl overflow-hidden hover:border-slate-700 transition-all flex flex-col justify-between shadow-lg"
+                className={`animate-fade-up ${staggerClass} bg-slate-900/70 border border-slate-800/90 rounded-2xl overflow-hidden hover:border-slate-600 hover:-translate-y-1 hover:shadow-2xl hover:shadow-indigo-900/20 transition-all duration-300 flex flex-col justify-between shadow-lg`}
               >
                 <div className="p-4 sm:p-6">
                   {/* Status Badges */}
@@ -178,7 +198,7 @@ export const AdminDashboard: React.FC = () => {
                         Uploaded
                       </div>
                       <div className="text-base sm:text-lg font-bold text-white flex items-center gap-1.5 mt-0.5">
-                        <ImageIcon className="w-4 h-4 text-indigo-400" />
+                        <ImageIcon className="w-4 h-4 text-amber-400" />
                         <span>{event.total_photos}</span>
                       </div>
                     </div>
@@ -187,8 +207,8 @@ export const AdminDashboard: React.FC = () => {
                       <div className="text-[10px] sm:text-[11px] uppercase tracking-wider text-slate-400 font-semibold">
                         In Gallery
                       </div>
-                      <div className="text-base sm:text-lg font-bold text-emerald-400 flex items-center gap-1.5 mt-0.5">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                      <div className="text-base sm:text-lg font-bold text-amber-400 flex items-center gap-1.5 mt-0.5">
+                        <CheckCircle2 className="w-4 h-4 text-amber-400" />
                         <span>{event.selected_photos}</span>
                       </div>
                     </div>
@@ -197,7 +217,7 @@ export const AdminDashboard: React.FC = () => {
                   {/* Team Members */}
                   <div className="mb-2">
                     <div className="text-[10px] sm:text-[11px] uppercase tracking-wider text-slate-500 font-semibold mb-1.5 flex items-center gap-1">
-                      <Users className="w-3 h-3" />
+                      <Users className="w-3 h-3 text-amber-400/80" />
                       <span>Assigned Photographers</span>
                     </div>
                     <div className="flex flex-wrap gap-1.5">
@@ -222,7 +242,7 @@ export const AdminDashboard: React.FC = () => {
                   <div className="flex items-center space-x-2">
                     <Link
                       to={`/events/${event.id}`}
-                      className="inline-flex items-center space-x-1.5 px-3 py-1.5 sm:py-2 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold rounded-lg shadow transition-colors"
+                      className="inline-flex items-center space-x-1.5 px-3 py-1.5 sm:py-2 bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-yellow-500 text-slate-950 text-xs font-bold rounded-lg shadow transition-colors"
                     >
                       <span>Manage & Curate</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -237,7 +257,7 @@ export const AdminDashboard: React.FC = () => {
                         {copiedSlug === event.gallery.slug ? (
                           <Check className="w-3.5 h-3.5 text-emerald-400" />
                         ) : (
-                          <Copy className="w-3.5 h-3.5 text-indigo-400" />
+                          <Copy className="w-3.5 h-3.5 text-amber-400" />
                         )}
                         <span className="hidden xs:inline sm:inline">
                           {copiedSlug === event.gallery.slug ? 'Copied' : 'Link'}
@@ -346,7 +366,7 @@ export const AdminDashboard: React.FC = () => {
                               setSelectedTeam(selectedTeam.filter((id) => id !== tm.id));
                             }
                           }}
-                          className="rounded border-slate-700 text-indigo-600 focus:ring-indigo-500"
+                          className="rounded border-slate-700 text-amber-500 focus:ring-amber-500"
                         />
                         <span className="font-medium text-white">{tm.name}</span>
                         <span className="text-slate-500 text-[11px] truncate">({tm.email})</span>
@@ -367,7 +387,7 @@ export const AdminDashboard: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white text-xs font-semibold rounded-lg shadow transition-colors cursor-pointer"
+                  className="px-4 py-2 bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-yellow-500 disabled:opacity-50 text-slate-950 font-bold text-xs rounded-lg shadow-lg shadow-amber-600/20 transition-colors cursor-pointer"
                 >
                   {isSubmitting ? 'Creating...' : 'Create Event'}
                 </button>
