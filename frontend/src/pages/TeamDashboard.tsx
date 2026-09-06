@@ -83,21 +83,21 @@ export const TeamDashboard: React.FC = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
       {/* Header banner */}
-      <div className="mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-xl sm:text-3xl font-bold tracking-tight text-white">
           Photographer Upload Portal
         </h1>
-        <p className="text-sm text-slate-400 mt-1">
+        <p className="text-xs sm:text-sm text-slate-400 mt-1">
           Upload high-resolution event photographs. Photos will be reviewed and curated by the lead Admin.
         </p>
 
         {/* Security Rule Callout */}
-        <div className="mt-4 p-3.5 bg-indigo-500/10 border border-indigo-500/20 rounded-xl flex items-center space-x-3 text-xs text-indigo-300">
-          <AlertTriangle className="w-4 h-4 text-indigo-400 flex-shrink-0" />
-          <span>
-            <strong>Role Permissions:</strong> You can upload and view your own submitted photos for your assigned events. Only the Admin can publish galleries or manage other users' uploads.
+        <div className="mt-3 sm:mt-4 p-3 sm:p-3.5 bg-indigo-500/10 border border-indigo-500/20 rounded-xl flex items-start sm:items-center space-x-2.5 sm:space-x-3 text-xs text-indigo-300">
+          <AlertTriangle className="w-4 h-4 text-indigo-400 flex-shrink-0 mt-0.5 sm:mt-0" />
+          <span className="text-[11px] sm:text-xs">
+            <strong>Role Permissions:</strong> You can upload and view your own submitted photos for assigned events. Only the Admin can publish galleries or manage other users' uploads.
           </span>
         </div>
       </div>
@@ -116,52 +116,55 @@ export const TeamDashboard: React.FC = () => {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Assigned Events Sidebar */}
-          <div className="lg:col-span-1 space-y-3">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 sm:gap-8">
+          {/* Assigned Events Sidebar / Horizontal on mobile */}
+          <div className="lg:col-span-1 space-y-2.5">
             <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">
-              Your Assigned Events ({events.length})
+              Assigned Events ({events.length})
             </h3>
-            {events.map((e) => {
-              const isSelected = selectedEvent?.id === e.id;
-              return (
-                <button
-                  key={e.id}
-                  onClick={() => setSelectedEvent(e)}
-                  className={`w-full text-left p-4 rounded-2xl border transition-all cursor-pointer flex items-center justify-between ${
-                    isSelected
-                      ? 'bg-indigo-600/10 border-indigo-500 text-white shadow-lg shadow-indigo-600/10'
-                      : 'bg-slate-900/60 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-white'
-                  }`}
-                >
-                  <div className="truncate pr-2">
-                    <div className="text-sm font-bold truncate text-white">{e.name}</div>
-                    <div className="text-xs text-slate-400 flex items-center gap-1 mt-1">
-                      <Calendar className="w-3 h-3 text-slate-500" />
-                      <span>{e.date || 'TBD'}</span>
+            
+            <div className="flex lg:flex-col gap-2 overflow-x-auto pb-2 lg:pb-0">
+              {events.map((e) => {
+                const isSelected = selectedEvent?.id === e.id;
+                return (
+                  <button
+                    key={e.id}
+                    onClick={() => setSelectedEvent(e)}
+                    className={`min-w-[200px] lg:min-w-0 w-full text-left p-3 sm:p-4 rounded-xl sm:rounded-2xl border transition-all cursor-pointer flex items-center justify-between flex-shrink-0 ${
+                      isSelected
+                        ? 'bg-indigo-600/10 border-indigo-500 text-white shadow-md shadow-indigo-600/10'
+                        : 'bg-slate-900/60 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-white'
+                    }`}
+                  >
+                    <div className="truncate pr-2">
+                      <div className="text-xs sm:text-sm font-bold truncate text-white">{e.name}</div>
+                      <div className="text-[11px] text-slate-400 flex items-center gap-1 mt-0.5 sm:mt-1">
+                        <Calendar className="w-3 h-3 text-slate-500 flex-shrink-0" />
+                        <span className="truncate">{e.date || 'TBD'}</span>
+                      </div>
                     </div>
-                  </div>
-                  <ChevronRight className={`w-4 h-4 ${isSelected ? 'text-indigo-400' : 'text-slate-600'}`} />
-                </button>
-              );
-            })}
+                    <ChevronRight className={`w-4 h-4 flex-shrink-0 ${isSelected ? 'text-indigo-400' : 'text-slate-600'}`} />
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           {/* Event Content & Upload Box */}
-          <div className="lg:col-span-3 space-y-6">
+          <div className="lg:col-span-3 space-y-5 sm:space-y-6">
             {selectedEvent && (
               <>
-                <div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 shadow-xl">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="bg-slate-900/80 border border-slate-800 rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div>
-                      <h2 className="text-xl font-bold text-white">{selectedEvent.name}</h2>
-                      <div className="flex items-center space-x-4 text-xs text-slate-400 mt-1">
+                      <h2 className="text-lg sm:text-xl font-bold text-white">{selectedEvent.name}</h2>
+                      <div className="flex flex-wrap items-center gap-3 text-xs text-slate-400 mt-1">
                         {selectedEvent.date && <span>📅 {selectedEvent.date}</span>}
                         {selectedEvent.location && <span>📍 {selectedEvent.location}</span>}
                       </div>
                     </div>
 
-                    <div className="text-xs font-medium text-slate-300 bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-700/80">
+                    <div className="text-xs font-medium text-slate-300 bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-700/80 w-fit">
                       My Uploads: <strong className="text-indigo-400">{photos.length}</strong> photos
                     </div>
                   </div>
@@ -174,7 +177,7 @@ export const TeamDashboard: React.FC = () => {
                       handleFiles(e.dataTransfer.files);
                     }}
                     onClick={() => fileInputRef.current?.click()}
-                    className="mt-6 border-2 border-dashed border-slate-700 hover:border-indigo-500 bg-slate-950/40 hover:bg-slate-950/70 rounded-2xl p-8 text-center cursor-pointer transition-all group"
+                    className="mt-4 sm:mt-6 border-2 border-dashed border-slate-700 hover:border-indigo-500 bg-slate-950/40 hover:bg-slate-950/70 rounded-xl sm:rounded-2xl p-6 sm:p-8 text-center cursor-pointer transition-all group"
                   >
                     <input
                       type="file"
@@ -184,16 +187,16 @@ export const TeamDashboard: React.FC = () => {
                       accept="image/*"
                       className="hidden"
                     />
-                    <UploadCloud className="w-10 h-10 text-indigo-400 group-hover:scale-110 transition-transform mx-auto mb-3" />
-                    <h4 className="text-sm font-semibold text-white">
-                      {isUploading ? `Uploading photographs (${uploadProgress}%)...` : 'Click or drag photographs here to upload'}
+                    <UploadCloud className="w-8 h-8 sm:w-10 sm:h-10 text-indigo-400 group-hover:scale-110 transition-transform mx-auto mb-2 sm:mb-3" />
+                    <h4 className="text-xs sm:text-sm font-semibold text-white">
+                      {isUploading ? `Uploading photographs (${uploadProgress}%)...` : 'Tap or drag photos here to upload'}
                     </h4>
-                    <p className="text-xs text-slate-500 mt-1">
-                      Supports multiple JPEG, PNG, WebP image uploads
+                    <p className="text-[11px] sm:text-xs text-slate-500 mt-1">
+                      Supports multiple JPEG, PNG, WebP image files
                     </p>
 
                     {isUploading && (
-                      <div className="w-full max-w-xs mx-auto mt-4 bg-slate-800 rounded-full h-2 overflow-hidden">
+                      <div className="w-full max-w-xs mx-auto mt-3 sm:mt-4 bg-slate-800 rounded-full h-2 overflow-hidden">
                         <div
                           className="bg-indigo-600 h-full transition-all duration-200"
                           style={{ width: `${uploadProgress}%` }}
@@ -205,7 +208,7 @@ export const TeamDashboard: React.FC = () => {
 
                 {/* My Uploaded Photos Grid */}
                 <div>
-                  <h3 className="text-sm font-bold uppercase tracking-wider text-slate-300 mb-4 flex items-center space-x-2">
+                  <h3 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-300 mb-3 sm:mb-4 flex items-center space-x-2">
                     <ImageIcon className="w-4 h-4 text-indigo-400" />
                     <span>My Uploaded Photos ({photos.length})</span>
                   </h3>
@@ -215,11 +218,11 @@ export const TeamDashboard: React.FC = () => {
                       You haven't uploaded any photographs for this event yet.
                     </div>
                   ) : (
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-4">
                       {photos.map((photo, index) => (
                         <div
                           key={photo.id}
-                          className="group relative rounded-2xl overflow-hidden border border-slate-800 bg-slate-900 shadow-md"
+                          className="group relative rounded-xl sm:rounded-2xl overflow-hidden border border-slate-800 bg-slate-900 shadow-md"
                         >
                           <div
                             className="aspect-[4/3] bg-slate-950 overflow-hidden cursor-pointer"
@@ -233,8 +236,8 @@ export const TeamDashboard: React.FC = () => {
                             />
                           </div>
 
-                          <div className="p-2 bg-slate-900 border-t border-slate-800 flex items-center justify-between text-[11px]">
-                            <span className="truncate text-slate-300 max-w-[120px]">
+                          <div className="p-2 bg-slate-900 border-t border-slate-800 flex items-center justify-between text-[10px] sm:text-[11px]">
+                            <span className="truncate text-slate-300 max-w-[90px] sm:max-w-[120px]">
                               {photo.original_name}
                             </span>
                             <div className="flex items-center space-x-1">
