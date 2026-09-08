@@ -19,7 +19,7 @@ export const Login: React.FC = () => {
     try {
       const data = await authApi.login(email, password);
       login(data.access_token, data.user);
-      navigate('/');
+      navigate('/dashboard');
     } catch (err: any) {
       setError(err.response?.data?.detail || 'Failed to sign in. Please verify your credentials.');
     } finally {
@@ -33,16 +33,34 @@ export const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center p-4 animate-page-enter">
+    <div className="min-h-screen flex items-center justify-center p-4 animate-page-enter">
       <div className="w-full max-w-md">
+
+        {/* Customer redirect banner */}
+        <Link
+          to="/"
+          className="flex items-center justify-between gap-3 w-full mb-6 p-3.5 bg-amber-500/10 border border-amber-500/30 rounded-2xl hover:bg-amber-500/15 transition-all group"
+        >
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-amber-600 to-yellow-400 flex items-center justify-center flex-shrink-0">
+              <Camera className="w-4 h-4 text-slate-950" />
+            </div>
+            <div className="text-left">
+              <div className="text-xs font-bold text-amber-400">Are you a customer?</div>
+              <div className="text-[11px] text-slate-400">Click here to view your photo gallery</div>
+            </div>
+          </div>
+          <ArrowRight className="w-4 h-4 text-amber-400 group-hover:translate-x-0.5 transition-transform flex-shrink-0" />
+        </Link>
+
         {/* Logo Card Header */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-600 via-amber-500 to-yellow-400 shadow-xl shadow-amber-500/25 mb-4 animate-float animate-pulse-glow">
             <Camera className="w-7 h-7 text-slate-950 font-bold" />
           </div>
-          <h1 className="text-2xl font-bold tracking-tight text-white">Sign in to <span className="animate-gradient-text">TrizenPhotos</span></h1>
+          <h1 className="text-2xl font-bold tracking-tight text-white">Staff Login — <span className="animate-gradient-text">TrizenPhotos</span></h1>
           <p className="text-sm text-slate-400 mt-1">
-            Collaborative event photo curation &amp; client delivery
+            For photographers &amp; administrators only
           </p>
         </div>
 

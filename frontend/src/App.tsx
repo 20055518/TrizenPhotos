@@ -5,6 +5,7 @@ import { ThemeProvider } from './context/ThemeContext';
 import { Navbar } from './components/Navbar';
 import { ProtectedRoute } from './components/ProtectedRoute';
 
+import { CustomerLanding } from './pages/CustomerLanding';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { AdminDashboard } from './pages/AdminDashboard';
@@ -12,7 +13,7 @@ import { EventDetail } from './pages/EventDetail';
 import { TeamDashboard } from './pages/TeamDashboard';
 import { CustomerGallery } from './pages/CustomerGallery';
 
-const RoleBasedHome: React.FC = () => {
+const RoleBasedDashboard: React.FC = () => {
   const { user } = useAuth();
   if (user?.role === 'ADMIN') {
     return <AdminDashboard />;
@@ -20,50 +21,76 @@ const RoleBasedHome: React.FC = () => {
   return <TeamDashboard />;
 };
 
+// Navbar only shows on staff/authenticated pages — NOT on customer landing or gallery
+const AppLayout: React.FC<{ showNav?: boolean; children: React.ReactNode }> = ({ showNav = true, children }) => (
+  <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans transition-colors duration-300">
+    {showNav && <Navbar />}
+    <div className="flex-1">{children}</div>
+  </div>
+);
+
 export const App: React.FC = () => {
   return (
     <ThemeProvider>
       <AuthProvider>
         <BrowserRouter>
-          <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans transition-colors duration-300">
-            <Navbar />
-            <div className="flex-1">
-            <Routes>
-              {/* Public customer gallery link (No auth needed) */}
-              <Route path="/gallery/:slug" element={<CustomerGallery />} />
+          <Routes>
+            {/* ── PUBLIC CUSTOMER ROUTES (no Navbar) ── */}
+            {/* Customer landing — enter gallery code here */}
+            <Route
+              path="/"
+              element={
+                <AppLayout showNav={false}>
+                  <CustomerLanding />
+                </AppLayout>
+              }
+            />
 
-              {/* Auth routes */}
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
+            {/* Customer gallery — PIN-protected photo viewer */}
+            <Route
+              path="/gallery/:slug"
+              element={
+                <AppLayout showNav={false}>
+                  <CustomerGallery />
+                </AppLayout>
+              }
+            />
 
-              {/* Protected Application routes */}
-              <Route
-                path="/"
-                element={
+            {/* ── AUTH ROUTES (no Navbar needed before login) ── */}
+            <Route path="/login" element={<AppLayout showNav={false}><Login /></AppLayout>} />
+            <Route path="/register" element={<AppLayout showNav={false}><Register /></AppLayout>} />
+
+            {/* ── PROTECTED STAFF ROUTES (with Navbar) ── */}
+            <Route
+              path="/dashboard"
+              element={
+                <AppLayout>
                   <ProtectedRoute>
-                    <RoleBasedHome />
+                    <RoleBasedDashboard />
                   </ProtectedRoute>
-                }
-              />
+                </AppLayout>
+              }
+            />
 
-              {/* Admin Curation & Event Detail */}
-              <Route
-                path="/events/:id"
-                element={
+            {/* Admin-only event curation */}
+            <Route
+              path="/events/:id"
+              element={
+                <AppLayout>
                   <ProtectedRoute allowedRoles={['ADMIN']}>
                     <EventDetail />
                   </ProtectedRoute>
-                }
-              />
+                </AppLayout>
+              }
+            />
 
-              {/* Fallback */}
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </div>
-        </div>
-      </BrowserRouter>
-    </AuthProvider>
-  </ThemeProvider>
+            {/* Fallback — unknown routes */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </ThemeProvider>
   );
 };
+
 export default App;

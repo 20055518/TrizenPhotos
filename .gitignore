@@ -1,20 +1,31 @@
 # Dependencies
 node_modules/
 backend/venv/
+frontend/node_modules/
 __pycache__/
-*.pyc
+*.py[cod]
 
 # Builds
 frontend/dist/
+dist/
 frontend/.oxlint/
 
 # Environment files
 .env
+.env.*
+!.env.example
 *.local
 
 # System & uploads
 uploads/*
 !uploads/.gitkeep
+
 .DS_Store
 Thumbs.db
+
+# Python testing
 .pytest_cache/
+
+# Logs
+*.log
+npm-debug.log*

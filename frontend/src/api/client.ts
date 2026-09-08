@@ -4,8 +4,12 @@ import {
   GalleryAccessData, GallerySummary 
 } from '../types';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL
+  ? `${import.meta.env.VITE_API_URL.replace(/\/$/, '')}/api`
+  : '/api';
+
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: API_BASE_URL,
 });
 
 api.interceptors.request.use((config) => {
@@ -133,7 +137,7 @@ export const galleriesApi = {
     return res.data;
   },
   getDownloadZipUrl: (slug: string, token: string) => {
-    return `/api/galleries/public/${slug}/download-zip?token=${encodeURIComponent(token)}`;
+  return `${API_BASE_URL}/galleries/public/${slug}/download-zip?token=${encodeURIComponent(token)}`;
   }
 };
 

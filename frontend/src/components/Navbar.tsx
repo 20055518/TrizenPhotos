@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
@@ -26,7 +26,7 @@ export const Navbar: React.FC = () => {
         <div className="h-16 flex items-center justify-between">
           {/* Logo */}
           <Link
-            to="/"
+            to="/dashboard"
             onClick={() => setMobileMenuOpen(false)}
             className="flex items-center space-x-2.5 group"
           >
@@ -47,9 +47,9 @@ export const Navbar: React.FC = () => {
           <nav className="hidden md:flex items-center space-x-3 lg:space-x-4">
             {isAdmin ? (
               <Link
-                to="/"
+                to="/dashboard"
                 className={`text-sm font-medium flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors ${
-                  location.pathname === '/' || location.pathname.startsWith('/events')
+                  location.pathname === '/dashboard' || location.pathname.startsWith('/events')
                     ? 'text-white bg-slate-800'
                     : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
                 }`}
@@ -59,9 +59,9 @@ export const Navbar: React.FC = () => {
               </Link>
             ) : (
               <Link
-                to="/"
+                to="/dashboard"
                 className={`text-sm font-medium flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors ${
-                  location.pathname === '/'
+                  location.pathname === '/dashboard'
                     ? 'text-white bg-slate-800'
                     : 'text-slate-300 hover:text-white hover:bg-slate-800/60'
                 }`}
@@ -168,7 +168,7 @@ export const Navbar: React.FC = () => {
           <div className="space-y-1">
             {isAdmin ? (
               <Link
-                to="/"
+                to="/dashboard"
                 onClick={() => setMobileMenuOpen(false)}
                 className="w-full flex items-center space-x-2 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"
               >
@@ -177,7 +177,7 @@ export const Navbar: React.FC = () => {
               </Link>
             ) : (
               <Link
-                to="/"
+                to="/dashboard"
                 onClick={() => setMobileMenuOpen(false)}
                 className="w-full flex items-center space-x-2 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-200 hover:bg-slate-800"
               >
@@ -202,3 +202,5 @@ export const Navbar: React.FC = () => {
     </header>
   );
 };
+
+
