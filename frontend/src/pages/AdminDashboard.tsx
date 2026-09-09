@@ -43,10 +43,10 @@ export const AdminDashboard: React.FC = () => {
     setIsSubmitting(true);
     try {
       await eventsApi.create({
-        name,
-        date,
-        location,
-        description,
+        name: name.trim(),
+        date: date || undefined,
+        location: location.trim() || undefined,
+        description: description.trim() || undefined,
         assigned_team_ids: selectedTeam,
       });
       setIsModalOpen(false);
@@ -56,8 +56,15 @@ export const AdminDashboard: React.FC = () => {
       setDescription('');
       setSelectedTeam([]);
       await fetchEvents();
-    } catch (err) {
-      alert('Failed to create event.');
+    } catch (err: any) {
+      console.error('Failed to create event:', err);
+      const detail = err.response?.data?.detail;
+      const message = typeof detail === 'string' 
+        ? detail 
+        : Array.isArray(detail) 
+          ? detail.map((d: any) => d.msg || d).join(', ')
+          : 'Failed to create event. Please try again.';
+      alert(`Error: ${message}`);
     } finally {
       setIsSubmitting(false);
     }
