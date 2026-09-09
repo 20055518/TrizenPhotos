@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { eventsApi, photosApi } from '../api/client';
+import { eventsApi, photosApi, getAssetUrl } from '../api/client';
 import { EventItem, PhotoItem } from '../types';
 import { Lightbox } from '../components/Lightbox';
 import { 
@@ -229,7 +229,7 @@ export const TeamDashboard: React.FC = () => {
                             onClick={() => setLightboxIndex(index)}
                           >
                             <img
-                              src={photo.thumbnail_url || photo.url}
+                              src={getAssetUrl(photo.thumbnail_url || photo.url)}
                               alt={photo.original_name}
                               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
                               loading="lazy"

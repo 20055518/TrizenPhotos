@@ -266,4 +266,23 @@ export const galleriesApi = {
   },
 };
 
+/**
+ * Returns full URL for photo/thumbnail paths.
+ * In development: /api/... (handled by Vite proxy)
+ * In production: https://trizenphotos.onrender.com/api/... (direct to Render)
+ */
+export const getAssetUrl = (path: string | undefined): string => {
+  if (!path) return '';
+  if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('blob:') || path.startsWith('data:')) {
+    return path;
+  }
+  // Remove /api prefix from relative path if baseURL already includes /api
+  const cleanPath = path.startsWith('/api/') ? path.slice(4) : path.startsWith('/') ? path : `/${path}`;
+  if (baseURL.endsWith('/api') || baseURL.endsWith('/api/')) {
+    const baseWithoutTrailing = baseURL.replace(/\/+$/, '');
+    return `${baseWithoutTrailing}${cleanPath}`;
+  }
+  return `${baseURL}${cleanPath}`;
+};
+
 export default api;

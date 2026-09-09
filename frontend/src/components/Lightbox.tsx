@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { PhotoItem } from '../types';
+import { getAssetUrl } from '../api/client';
 import { X, ChevronLeft, ChevronRight, Download, Calendar, HardDrive, User } from 'lucide-react';
 
 interface LightboxProps {
@@ -39,7 +40,7 @@ export const Lightbox: React.FC<LightboxProps> = ({
 
   const handleDownload = () => {
     const link = document.createElement('a');
-    link.href = photo.url;
+    link.href = getAssetUrl(photo.url);
     link.download = photo.original_name || 'photo.jpg';
     link.target = '_blank';
     document.body.appendChild(link);
@@ -91,7 +92,7 @@ export const Lightbox: React.FC<LightboxProps> = ({
 
         <img
           key={photo.id}
-          src={photo.url}
+          src={getAssetUrl(photo.url)}
           alt={photo.original_name}
           className="max-h-[70vh] sm:max-h-[80vh] max-w-[95vw] sm:max-w-[90vw] object-contain rounded-lg shadow-2xl animate-img-fade"
         />

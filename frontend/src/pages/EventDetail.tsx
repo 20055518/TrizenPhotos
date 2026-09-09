@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { eventsApi, photosApi, galleriesApi } from '../api/client';
+import { eventsApi, photosApi, galleriesApi, getAssetUrl } from '../api/client';
 import { EventItem, PhotoItem } from '../types';
 import { Lightbox } from '../components/Lightbox';
 import { 
@@ -420,7 +420,7 @@ export const EventDetail: React.FC = () => {
                   onClick={() => setLightboxIndex(index)}
                 >
                   <img
-                    src={photo.thumbnail_url || photo.url}
+                    src={getAssetUrl(photo.thumbnail_url || photo.url)}
                     alt={photo.original_name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                     loading="lazy"

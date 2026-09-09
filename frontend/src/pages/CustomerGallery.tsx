@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { galleriesApi } from '../api/client';
+import { galleriesApi, getAssetUrl } from '../api/client';
 import { PublicGalleryInfo, GalleryAccessData } from '../types';
 import { Lightbox } from '../components/Lightbox';
 import { useTheme } from '../context/ThemeContext';
@@ -331,7 +331,7 @@ export const CustomerGallery: React.FC = () => {
                   className={`animate-photo-pop ${staggerClass} break-inside-avoid group relative rounded-xl sm:rounded-2xl overflow-hidden bg-slate-900 border border-slate-800/80 hover:border-indigo-500/40 cursor-pointer shadow-md hover:shadow-2xl hover:shadow-indigo-900/30 hover:-translate-y-0.5 transition-all duration-300`}
                 >
                   <img
-                    src={photo.thumbnail_url || photo.url}
+                    src={getAssetUrl(photo.thumbnail_url || photo.url)}
                     alt={photo.original_name}
                     className="w-full object-cover group-hover:scale-110 transition-transform duration-500"
                     loading="lazy"
