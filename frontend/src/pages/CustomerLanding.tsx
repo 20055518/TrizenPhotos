@@ -1,43 +1,41 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { Camera, Search, ArrowRight, Shield, Star, Image as ImageIcon, Lock, Sun, Moon } from 'lucide-react';
-import { useTheme } from '../context/ThemeContext';
+﻿import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { Camera, Search, ArrowRight, Shield, Star, Image as ImageIcon, Lock, Sun, Moon } from "lucide-react";
+import { useTheme } from "../context/ThemeContext";
 
 const features = [
   {
     icon: Lock,
-    title: 'Private & Secure',
-    desc: 'Your photos are PIN-protected and accessible only to you.',
+    title: "Private & Secure",
+    desc: "Your photos are PIN-protected and accessible only to you.",
   },
   {
     icon: ImageIcon,
-    title: 'Curated Selection',
-    desc: 'Only the best shots, handpicked by your photographer.',
+    title: "Curated Selection",
+    desc: "Only the best shots, handpicked by your photographer.",
   },
   {
     icon: Star,
-    title: 'Download Yours',
-    desc: 'Download any or all photos in full resolution.',
+    title: "Download Yours",
+    desc: "Download any or all photos in full resolution.",
   },
 ];
 
 export const CustomerLanding: React.FC = () => {
-  const [galleryCode, setGalleryCode] = useState('');
+  const [galleryCode, setGalleryCode] = useState("");
   const navigate = useNavigate();
   const { mode, toggleTheme } = useTheme();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    const code = galleryCode.trim().toLowerCase().replace(/[^a-z0-9-]/g, '');
+    const code = galleryCode.trim().toLowerCase().replace(/[^a-z0-9-]/g, "");
     if (code) {
-      navigate('/gallery/' + code);
+      navigate("/gallery/" + code);
     }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 flex flex-col animate-page-enter">
-
-      {/* Top bar */}
       <header className="flex items-center justify-between px-4 sm:px-8 py-4 border-b border-white/5">
         <div className="flex items-center space-x-2.5">
           <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-600 via-amber-500 to-yellow-400 flex items-center justify-center shadow-lg shadow-amber-500/20 animate-pulse-glow">
@@ -52,14 +50,13 @@ export const CustomerLanding: React.FC = () => {
             </div>
           </div>
         </div>
-
         <div className="flex items-center gap-3">
           <button
             onClick={toggleTheme}
             className="p-2 rounded-xl text-amber-400 hover:bg-amber-500/10 border border-amber-500/20 transition-all cursor-pointer"
             title="Toggle theme"
           >
-            {mode === 'dark' ? (
+            {mode === "dark" ? (
               <Sun className="w-4 h-4 animate-pulse" />
             ) : (
               <Moon className="w-4 h-4" />
@@ -75,9 +72,7 @@ export const CustomerLanding: React.FC = () => {
         </div>
       </header>
 
-      {/* Hero */}
       <main className="flex-1 flex flex-col items-center justify-center px-4 py-16 text-center">
-        {/* Floating camera icon */}
         <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-tr from-amber-600 via-amber-500 to-yellow-400 shadow-2xl shadow-amber-500/30 mb-8 animate-float animate-pulse-glow">
           <Camera className="w-10 h-10 text-slate-950" />
         </div>
@@ -93,7 +88,6 @@ export const CustomerLanding: React.FC = () => {
           Enter your <strong className="text-amber-400">Gallery Code</strong> below to access your photos.
         </p>
 
-        {/* Gallery Code Input */}
         <form onSubmit={handleSearch} className="w-full max-w-md">
           <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 sm:p-6 shadow-2xl backdrop-blur-xl">
             <label className="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-3 text-left">
@@ -122,32 +116,29 @@ export const CustomerLanding: React.FC = () => {
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
-
             <p className="text-[11px] text-slate-500 mt-3 text-left">
               Your gallery code was shared by your photographer via email or message.
             </p>
           </div>
         </form>
 
-        {/* Demo hint */}
         <div className="mt-6 p-3 bg-amber-500/5 border border-amber-500/20 rounded-xl text-xs text-slate-400 max-w-md">
-          <span className="text-amber-400 font-semibold">Demo:</span> Enter code{' '}
+          <span className="text-amber-400 font-semibold">Demo:</span> Enter code{" "}
           <button
-            onClick={() => setGalleryCode('abc123')}
+            onClick={() => setGalleryCode("abc123")}
             className="font-mono text-amber-300 font-bold hover:underline cursor-pointer"
           >
             abc123
-          </button>{' '}
+          </button>{" "}
           then use PIN <span className="font-mono text-amber-300 font-bold">482917</span> to view a sample wedding gallery.
         </div>
 
-        {/* Features row */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-16 max-w-2xl w-full text-left">
           {features.map(({ icon: Icon, title, desc }, i) => (
             <div
               key={title}
               className="bg-slate-900/50 border border-slate-800 rounded-2xl p-4 animate-fade-up"
-              style={{ animationDelay: i * 0.1 + 's' }}
+              style={{ animationDelay: i * 0.1 + "s" }}
             >
               <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-3">
                 <Icon className="w-4 h-4 text-amber-400" />
@@ -159,7 +150,6 @@ export const CustomerLanding: React.FC = () => {
         </div>
       </main>
 
-      {/* Footer */}
       <footer className="text-center py-6 text-[11px] text-slate-600 border-t border-white/5">
         Powered by <span className="text-amber-500/80 font-semibold">TrizenPhotos</span> — Luxury Photography Studio Platform
       </footer>
