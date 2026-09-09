@@ -92,12 +92,56 @@ export const CustomerGallery: React.FC = () => {
     );
   }
 
+  // If gallery does not exist or was unpublished
+  if (!galleryInfo && error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 flex flex-col justify-between py-8 sm:py-12 px-4 select-none">
+        <div className="flex justify-end max-w-md w-full mx-auto">
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-xl text-amber-400 hover:bg-amber-500/10 border border-amber-500/20 transition-all cursor-pointer flex items-center gap-1.5"
+          >
+            {mode === 'dark' ? <Sun className="w-4 h-4 text-amber-400 animate-pulse" /> : <Moon className="w-4 h-4 text-amber-500" />}
+          </button>
+        </div>
+
+        <div className="max-w-md w-full mx-auto my-auto animate-page-enter text-center">
+          <div className="inline-flex items-center justify-center w-16 h-16 rounded-3xl bg-rose-500/10 border border-rose-500/20 p-3 mb-4 text-rose-400">
+            <AlertCircle className="w-8 h-8" />
+          </div>
+          <h1 className="text-2xl font-black text-white tracking-tight mb-2">
+            Gallery Not Found
+          </h1>
+          <p className="text-sm text-slate-400 max-w-sm mx-auto mb-6">
+            The gallery code <code className="text-amber-400 font-mono font-bold bg-slate-800 px-1.5 py-0.5 rounded">{slug}</code> does not exist or has not been published yet.
+          </p>
+          <a
+            href="/"
+            className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-yellow-500 text-slate-950 font-bold rounded-xl text-sm transition-all shadow-lg shadow-amber-600/20 cursor-pointer"
+          >
+            Back to Home Portal
+          </a>
+        </div>
+
+        <div className="text-center text-xs text-slate-600">
+          Powered by TrizenPhotos
+        </div>
+      </div>
+    );
+  }
+
   // PIN Verification Screen
   if (!accessData) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 flex flex-col justify-between py-8 sm:py-12 px-4 select-none">
-        {/* Top bar with theme toggle */}
-        <div className="flex justify-end max-w-md w-full mx-auto">
+        {/* Top bar with back to home and theme toggle */}
+        <div className="flex justify-between items-center max-w-md w-full mx-auto">
+          <a
+            href="/"
+            className="text-xs text-slate-400 hover:text-amber-400 flex items-center gap-1 transition-colors"
+          >
+            ← Home Portal
+          </a>
           <button
             onClick={toggleTheme}
             title={`Switch to ${mode === 'dark' ? 'Light' : 'Dark'} mood`}
