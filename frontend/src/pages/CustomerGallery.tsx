@@ -68,6 +68,15 @@ export const CustomerGallery: React.FC = () => {
     }
   };
 
+  const handleLockGallery = () => {
+    if (slug) {
+      sessionStorage.removeItem(`gallery_token_${slug}`);
+      sessionStorage.removeItem(`gallery_data_${slug}`);
+    }
+    setAccessData(null);
+    setPin('');
+  };
+
   const handleDownloadAll = () => {
     if (!slug || !accessData) return;
     setIsDownloadingZip(true);
@@ -307,6 +316,15 @@ export const CustomerGallery: React.FC = () => {
             >
               <Download className="w-4 h-4 text-slate-950 font-bold" />
               <span>{isDownloadingZip ? 'Preparing Zip...' : 'Download All (.ZIP)'}</span>
+            </button>
+
+            <button
+              onClick={handleLockGallery}
+              title="Lock Gallery"
+              className="p-2 sm:px-3 sm:py-2 rounded-xl text-slate-400 hover:text-amber-400 hover:bg-amber-500/10 border border-slate-800 hover:border-amber-500/30 transition-all cursor-pointer flex items-center gap-1.5 text-xs font-semibold"
+            >
+              <Lock className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Lock Gallery</span>
             </button>
           </div>
         </div>
