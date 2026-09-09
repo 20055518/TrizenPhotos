@@ -22,7 +22,7 @@ export const Register: React.FC = () => {
     try {
       const data = await authApi.register({ name, email, password, role });
       login(data.access_token, data.user);
-      navigate('/');
+      navigate('/dashboard');
     } catch (err: any) {
       setError(err.response?.data?.detail || 'Failed to create account. Please try again.');
     } finally {
