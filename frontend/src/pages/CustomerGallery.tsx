@@ -24,18 +24,10 @@ export const CustomerGallery: React.FC = () => {
 
   useEffect(() => {
     if (!slug) return;
-    const savedToken = sessionStorage.getItem(`gallery_token_${slug}`);
-    const savedAccess = sessionStorage.getItem(`gallery_data_${slug}`);
 
-    if (savedToken && savedAccess) {
-      try {
-        setAccessData(JSON.parse(savedAccess));
-        setIsLoading(false);
-        return;
-      } catch (e) {
-        sessionStorage.removeItem(`gallery_token_${slug}`);
-      }
-    }
+    // Reset access data on every fresh entry to ensure PIN is always prompted
+    setAccessData(null);
+    setPin('');
 
     galleriesApi
       .getPublicInfo(slug)
